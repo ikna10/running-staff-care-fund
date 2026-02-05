@@ -170,12 +170,12 @@ def signup_page():
         
         st.markdown("### 📝 Create Account")
 
-        name = st.text_input("Name *")
-        hq = st.text_input("Headquarter *")
-        cmsid = st.text_input("CMSID *")
-        email = st.text_input("Email *")
-        password = st.text_input("Password *", type="password")
-        mobile = st.text_input("Mobile (10 digits) *")
+        name = st.text_input("Name *").strip()
+        hq = st.text_input("Headquarter *").strip()
+        cmsid = st.text_input("CMSID *").strip()
+        email = st.text_input("Email *").strip()
+        password = st.text_input("Password *", type="password").strip()
+        mobile = st.text_input("Mobile (10 digits) *").strip()
 
         if st.button("Register"):
 
@@ -332,6 +332,7 @@ else:
         login_page()
     else:
         signup_page()
+
 
 
 
