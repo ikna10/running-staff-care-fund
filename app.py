@@ -215,7 +215,7 @@ def login_page():
         st.image("handshake.png", width=420)
 
     with col2:
-        st.markdown('<div class="login-box">', unsafe_allow_html=True)
+        
 
         st.markdown('<div class="main-title">🔐only signed up group members can login 🔐</div>', unsafe_allow_html=True)
         
@@ -333,4 +333,5 @@ else:
         login_page()
     else:
         signup_page()
+
 
