@@ -167,8 +167,7 @@ def signup_page():
         st.image("handshake.png", width=420)
 
     with col2:
-        st.markdown('<div class="login-box">', unsafe_allow_html=True)
-
+        
         st.markdown("### 📝 Create Account")
 
         name = st.text_input("Name *")
@@ -333,5 +332,6 @@ else:
         login_page()
     else:
         signup_page()
+
 
 
