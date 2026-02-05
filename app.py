@@ -12,6 +12,15 @@ import re
 
 st.markdown("""
 <style>
+/* Hide Streamlit branding */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* Extra: hide bottom-right hosted by */
+[data-testid="stToolbar"] {display: none;}
+[data-testid="stDecoration"] {display: none;}
+[data-testid="stStatusWidget"] {display: none;}
 body {
     background-color: #f5f7fb;
 }
@@ -332,6 +341,7 @@ else:
         login_page()
     else:
         signup_page()
+
 
 
 
