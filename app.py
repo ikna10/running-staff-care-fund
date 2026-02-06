@@ -12,15 +12,6 @@ import re
 
 st.markdown("""
 <style>
-/* Hide Streamlit branding */
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
-
-/* Extra: hide bottom-right hosted by */
-[data-testid="stToolbar"] {display: none;}
-[data-testid="stDecoration"] {display: none;}
-[data-testid="stStatusWidget"] {display: none;}
 body {
     background-color: #f5f7fb;
 }
@@ -106,10 +97,7 @@ def connect_sheet():
         "https://spreadsheets.google.com/feeds",
         "https://www.googleapis.com/auth/drive"
     ]
-
-    creds_dict = dict(st.secrets["gcp_service_account"])
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
-
+    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
     client = gspread.authorize(creds)
     return client.open(SHEET_NAME).sheet1
 
@@ -176,7 +164,8 @@ def signup_page():
         st.image("handshake.png", width=420)
 
     with col2:
-        
+        st.markdown('<div class="login-box">', unsafe_allow_html=True)
+
         st.markdown("### 📝 Create Account")
 
         name = st.text_input("Name *").strip()
@@ -259,38 +248,21 @@ def login_page():
 def dashboard_page():
     user = st.session_state.user_data
 
-    # ================= SIDEBAR =================
-    st.sidebar.success(f"Welcome {user['name']}")
+    # ===== MOBILE SAFE MENU (ONLY HERE) =====
+    with st.expander("☰ Menu", expanded=False):
+        st.link_button("ℹ️ About Group", "https://docs.google.com/document/d/ABOUT")
+        st.link_button("📜 Group Rules", "https://docs.google.com/document/d/RULES")
+        st.link_button("💰 Fund Status", "https://docs.google.com/spreadsheets/d/FUND")
 
-    # 🔹 LOGOUT BUTTON
-    if st.sidebar.button("🚪 Logout"):
-        st.session_state.logged_in = False
-        st.session_state.page = "login"
-        st.rerun()
+        if st.button("🚪 Logout"):
+            st.session_state.logged_in = False
+            st.session_state.page = "login"
+            st.rerun()
 
-    st.sidebar.markdown("---")
-
-    # 🔹 SIDEBAR LINK BUTTONS
-    st.sidebar.markdown("### 📌 Quick Links")
-
-    st.sidebar.link_button(
-        "📜 Group Rules",
-        "https://docs.google.com/document/d/1UmwVVb2q8azpaN4nrN22489r9zBH_tJKzXJPZtivyxM/edit?usp=sharing"
-    )
-
-    st.sidebar.link_button(
-        "👥 Group Members",
-        "https://docs.google.com/document/d/1YymXCoUaKSVT9I8O-4JrPcAAHTnsmNagHRoZV9Q7quM/edit"
-    )
-
-    st.sidebar.link_button(
-        "💰 Fund Status (Coming Soon)",
-        "https://docs.google.com/spreadsheets/d/FUND_STATUS_SHEET_LINK"
-    )
-
+    
     # ================= DASHBOARD BODY =================
     st.markdown("## 📊 User Dashboard")
-    st.markdown("---")
+
 
     # ================= BRIEF HISTORY =================
     st.markdown("### 📝 A Brief History")
@@ -329,6 +301,9 @@ def dashboard_page():
     st.write("🏢 **HQ:**", user["hq"])
     st.write("📧 **Email:**", user["email"])
     st.write("📱 **Mobile:**", user["mobile"])
+    
+    
+    
     app_footer()
 
 
@@ -341,8 +316,3 @@ else:
         login_page()
     else:
         signup_page()
-
-
-
-
-
